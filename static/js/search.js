@@ -31,8 +31,16 @@ $(document).ready(function(){
 		}	
    });
    
-	$("#sel1").change(function(){sorting();});								// if sorting option changed
-	$("#sel2").change(function(){sorting();});								// ''
+   $("#table tr").click(function() {										// if user clicks on row
+		
+		if ($("tr").index(this) != 0){										// if not table header
+			var user_id = $(this).find('td:eq(0)').text();					// get the clicked row's user id
+			window.location = 'http://127.0.0.1:5000/view/'+user_id;		// go to the user's page
+		}
+	});
+	
+   $("#sel1").change(function(){sorting();});								// if sorting option changed
+   $("#sel2").change(function(){sorting();});								// ''
    
    function sorting()
    {
