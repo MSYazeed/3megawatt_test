@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+   sorting();
    $("#search-btn").click(function(){
 	   
 		var query = $("#system-search").val(); 										  // search term input
@@ -30,5 +30,40 @@ $(document).ready(function(){
 			
 		}	
    });
+   
+	$("#sel1").change(function(){sorting();});								// if sorting option changed
+	$("#sel2").change(function(){sorting();});								// ''
+   
+   function sorting()
+   {
+	    var sorting_tag    = $( "#sel1 option:selected" ).index(); 			//getting index of sorting tag
+		var sorting_option = $( "#sel2 option:selected" ).index(); 			//getting index of sorting option (asc or desc)
+		var table_body 	   = $( '#table tbody' );
+		
+		table_body.find('tr').sort(function(a,b){ 
+			
+			var selected_col1 = $(a).find('td:eq('+sorting_tag+')').text(); // column to sort with using the sorting tag
+			var selected_col2 = $(b).find('td:eq('+sorting_tag+')').text(); // same column for comparison
+            
+			if (sorting_tag == 0){											// if the sorting tag is ID (numeric)
+				if (sorting_option == 0){									// if asc 
+					return (+selected_col1 > +selected_col2) ? 1 : 0;         
+				}
+				else{														// else desc
+					return (+selected_col1 > +selected_col2) ? 0 : 1;          
+				}
+			}
+			else{															// if sorting tag isn't numeric
+				if (sorting_option == 0){									// if asc
+					return (selected_col1 > selected_col2) ? 1 : 0;         
+				}
+				else{														// else desc
+					return (selected_col1 > selected_col2) ? 0 : 1;        	  
+				}
+			}
+		
+		}).appendTo(table_body);
+   }
+ 
 
 }); 
